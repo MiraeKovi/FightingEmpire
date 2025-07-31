@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Test Background</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fighting Empire</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       padding: 0;
       height: 100vh;
-      background: url('bg.png') no-repeat center center fixed;
-      background-size: cover;
       font-family: Arial, sans-serif;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASsAAACpCAIAAAD8yYyEAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAA4zZJREFUeF7tnQeQGzEQxX3pwHl9gn9BDv4ubZqlZJAv+IOkS3z95kG0SxUoJEFV7LO0pVqHdKq+7/xwQAAAAAAAAAAADA9GfbVreXL9X7+ye96/f7/2+/93dn+/vnHdnTH0z2fo1I9d3FePqXtG4LxUZ0vVfQnOW1kBvd3OQnXLWgX3dXq+9FvveBzzpsa9x7AyHn1emdpPVm7u3eRXDYmrgT09u1rN9p8Lb/BdqxPOJYlNZ7bByHF8+hN+JnmP+sc3Tb3bseuXtPVT5Iv0HwqOAyHfi0W7msqf+XWaFzWDzVdAvspXNdW9DRv+0VbHsChwfEcXz9uVl6fOb3qWnt0GoLe9/SZbC7GqQ6fHOSqcGkvGm+Lul+3uZ0XgFfKn8Ml5ufybHfJjskOZPV+46zAnz3PW+H50eHu3N16Mf6k5PP9K9lR/Xe6K3d/Ofr0a+JXqz49X/E2PoUuFdVfZq1p/7T17vTtT27ZWR9cZn2MTjzYqXny3vgk4UNUwWTzcfuXtj9ZAAAAAAAAAAAAgKYPXxB0ERB1HwErAAAAAElFTkSuQmCC') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
     }
 
-    .center-box {
+    .box {
       background-color: rgba(0, 0, 0, 0.75);
       padding: 30px;
       border-radius: 15px;
-      color: white;
       text-align: center;
-      max-width: 300px;
-      margin: 20vh auto;
+      max-width: 90%;
+      width: 350px;
     }
 
     input, button {
       margin-top: 10px;
       padding: 10px;
+      width: 100%;
       border: none;
       border-radius: 5px;
       font-size: 1rem;
@@ -41,14 +41,45 @@
       color: white;
       cursor: pointer;
     }
+
+    h1 {
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
-  <div class="center-box">
-    <p>What should we call you?</p>
-    <input type="text" placeholder="Enter your name..." />
-    <br>
-    <button>Continue</button>
+  <div class="box" id="namePrompt" style="display: none;">
+    <h1>What should we call you?</h1>
+    <input type="text" id="username" placeholder="Enter your name..." />
+    <button onclick="saveName()">Continue</button>
   </div>
+
+  <div class="box" id="greeting" style="display: none;">
+    <h1 id="welcomeMessage"></h1>
+  </div>
+
+  <script>
+    const savedName = localStorage.getItem("fightingEmpireName");
+
+    function saveName() {
+      const name = document.getElementById("username").value.trim();
+      if (name) {
+        localStorage.setItem("fightingEmpireName", name);
+        showGreeting(name);
+      }
+    }
+
+    function showGreeting(name) {
+      document.getElementById("namePrompt").style.display = "none";
+      document.getElementById("welcomeMessage").textContent = `Welcome, ${name}!`;
+      document.getElementById("greeting").style.display = "block";
+    }
+
+    if (savedName) {
+      showGreeting(savedName);
+    } else {
+      document.getElementById("namePrompt").style.display = "block";
+    }
+  </script>
 </body>
 </html>
